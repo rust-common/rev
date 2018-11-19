@@ -40,7 +40,7 @@ where
     T::IntoIter: DoubleEndedIterator
 {
     fn clone(&self) -> Self {
-        Self::new(self.original)
+        Self { original: self.original }
     }
 }
 

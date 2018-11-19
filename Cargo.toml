@@ -2,5 +2,8 @@
 name = "rev"
 version = "0.2.0"
 authors = ["Sergey Shandar"]
+description = "Reversed IntoIter"
+license = "Apache-2.0"
+repository = "https://github.com/rust-common/rev"
 
 [dependencies]
