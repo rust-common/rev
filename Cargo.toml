@@ -1,6 +1,6 @@
 [package]
 name = "rev"
-version = "0.1.0"
-authors = ["Sergey Shandar <sergey.shandar@gmail.com>"]
+version = "0.2.0"
+authors = ["Sergey Shandar"]
 
 [dependencies]
