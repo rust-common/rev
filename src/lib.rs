@@ -1,21 +1,25 @@
-
-pub struct Rev<T>
-where
-    T: IntoIterator + Copy,
-    T::IntoIter: DoubleEndedIterator,
+pub struct RevIntoIter<T>
+    where
+        T: IntoIterator + Copy,
+        T::IntoIter: DoubleEndedIterator,
 {
     original: T
 }
 
-impl<T> Rev<T>
-where
-    T: IntoIterator + Copy,
-    T::IntoIter: DoubleEndedIterator
-{
-    pub fn new(v: T) -> Self { Self { original: v } }
+pub trait Rev: IntoIterator + Copy
+    where Self::IntoIter: DoubleEndedIterator {
+    fn rev(self) -> RevIntoIter<Self>;
 }
 
-impl<T> IntoIterator for Rev<T>
+impl<T> Rev for T
+    where
+        T: IntoIterator + Copy,
+        T::IntoIter: DoubleEndedIterator,
+{
+    fn rev(self) -> RevIntoIter<Self> { RevIntoIter { original: self } }
+}
+
+impl<T> IntoIterator for RevIntoIter<T>
 where
     T: IntoIterator + Copy,
     T::IntoIter: DoubleEndedIterator
@@ -27,14 +31,14 @@ where
     }
 }
 
-impl<T> Copy for Rev<T>
+impl<T> Copy for RevIntoIter<T>
 where
     T: IntoIterator + Copy,
     T::IntoIter: DoubleEndedIterator
 {
 }
 
-impl<T> Clone for Rev<T>
+impl<T> Clone for RevIntoIter<T>
 where
     T: IntoIterator + Copy,
     T::IntoIter: DoubleEndedIterator
@@ -50,7 +54,7 @@ mod tests {
     #[test]
     fn test() {
         let a = [1, 2, 3];
-        let x = Rev::new(&a);
+        let x = a.rev();
         let d: Vec<i32> = x.into_iter().map(|&x| x).collect();
         assert_eq!(d, vec!(3, 2, 1));
     }
